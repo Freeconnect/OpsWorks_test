@@ -52,7 +52,7 @@ def ping(host):
 
 def check_ssh(host):
     s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-    socket.setdefaulttimeout(5)
+    socket.setdefaulttimeout(10)
     port = 22  # port number is a number, not string
     try:
         s.connect((host, port))
