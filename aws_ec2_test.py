@@ -49,11 +49,28 @@ def ping(host):
     # Pinging
     return system_call(command) == 0
 
+def check_ssh(host):
+    s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    socket.setdefaulttimeout(5)
+    port = 22  # port number is a number, not string
+    try:
+        s.connect((host, port))
+        print (format(colored('Host port 22 is open!', 'green')))
+    except socket.error as e: 
+        print ("Something's wrong with {0}:{1}. Exception is: {2}" .format(
+            colored(host, 'cyan' ),
+            colored(port, 'cyan'),
+            colored(e, 'red')))
+    finally:
+        s.close()
+
 for host in hosts:
     print (format(colored('Ping the host:', 'cyan')))
     print (format(colored('Server is OK!', 'green')) if ping(host) == True else format(colored('Server is not responding!', 'red')))
     print (format(colored('Try to get HTTP responce from host:', 'cyan')))
-    curl('http://' + host) 
+    curl('http://' + host)
+    print (format(colored('Check ssh port:', 'cyan')))
+    check_ssh(host)
 
 filters = [{'Name': 'tag:Name', 'Values': ['Ivanov_Oleg_1st', 'Ivanov_Oleg_2nd', 'Ivanov_Oleg_3rd']}]
 ec2 = boto3.resource('ec2',aws_access_key_id = akey, aws_secret_access_key = skey, region_name = 'eu-west-1')
