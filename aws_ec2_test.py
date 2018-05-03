@@ -14,6 +14,7 @@ from platform   import system as system_name  # Returns the system/OS name
 from subprocess import call   as system_call  # Execute a shell command
 from urllib2 import Request, urlopen, URLError # For our curl function
 import datetime # Datetime
+import socket
 import warnings # Bug on windows with unicode warning
 warnings.filterwarnings("ignore", category=UnicodeWarning) # Bug on windows with unicode warning
 
